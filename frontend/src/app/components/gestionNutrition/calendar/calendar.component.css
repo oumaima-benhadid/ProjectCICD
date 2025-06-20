@@ -1,0 +1,26 @@
+/* calendar.component.css */
+.calendar-wrapper {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calendar-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  /* Style pour les événements */
+  .fc-event {
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style pour l'icône de rappel */
+  .bi-alarm {
+    color: #fff;
+    opacity: 0.8;
+  }

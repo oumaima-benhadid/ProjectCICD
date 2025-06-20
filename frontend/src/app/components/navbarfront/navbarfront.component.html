@@ -1,0 +1,54 @@
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+    <a routerLink="/" class="logo d-flex align-items-center">
+      <h1 class="sitename">FitMind</h1>
+    </a>
+
+    <nav id="navmenu" class="navmenu d-flex align-items-center">
+      <ul class="d-flex align-items-center mb-0">
+        <li><a href="#hero" class="nav-link active">Accueil</a></li>
+        <li><a routerLink="/about" class="nav-link">À propos</a></li>
+        <ng-container *ngIf="isEtudiant">
+          <li><a routerLink="/abonnements-cards" class="nav-link">Abonnements</a></li>
+          <li><a routerLink="/coach" class="nav-link">Coach IA</a></li>
+          <li><a routerLink="/etudiant/activite" class="nav-link">Activités</a></li>
+          <li><a routerLink="/evenements" class="nav-link">Événements</a></li>
+          <li><a routerLink="/reclamation" class="nav-link">Mes réclamations</a></li>
+          <li><a routerLink="/dossier-medical" class="nav-link">Dossier Médical</a></li>
+          <li><a routerLink="/mesReservations" class="nav-link">Réservations</a></li>
+          <li><a routerLink="/listmenu" class="nav-link">Menu</a></li>
+
+
+        </ng-container>
+        
+        <ng-container *ngIf="isNutritionniste">
+          <li><a routerLink="/nutritionniste/dossier-nutritionniste" class="nav-link">Dossiers Médicaux</a></li>
+          <li><a routerLink="/nutritionniste/RendezVousNutritionniste" class="nav-link">Rendez-vous</a></li>
+        </ng-container>
+        
+        <ng-container *ngIf="isAdmin">
+          <li><a routerLink="/admin/dashboard" class="nav-link">Admin Panel</a></li>
+        </ng-container>
+        
+        <li><a routerLink="/contact" class="nav-link">Contact</a></li>
+
+        <li *ngIf="!isLoggedIn">
+          <a routerLink="/login" class="btn-login">Se connecter</a>
+        </li>
+
+        <li *ngIf="isLoggedIn" class="dropdown">
+          <a href="#"><span>👤 Profil</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a routerLink="/userprofilee">Mon Profil</a></li>
+            <li><a routerLink="/change-password">Changer mot de passe</a></li>
+            <li><a (click)="logout()">Se déconnecter</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+  </div>
+</header>

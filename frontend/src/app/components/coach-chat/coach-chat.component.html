@@ -1,0 +1,77 @@
+<div class="coach-container">
+  <div class="header">
+    <h1>Bienvenue dans votre Coach personnel</h1>
+  </div>
+  <button (click)="toggleDarkMode()" class="theme-toggle">
+    {{ isDarkMode ? '☀️ Mode clair' : '🌙 Mode sombre' }}
+  </button>
+  
+
+  <div class="chat-box" #chatBox>
+    <div *ngFor="let item of chatHistory" class="chat-message">
+      <!-- Utilisateur -->
+      <div class="bubble-wrapper user">
+        <div class="bubble user">
+          <p>{{ item.question }}</p>
+        </div>
+      </div>
+
+      <!-- Coach -->
+      <div class="bubble-wrapper coach">
+        <img src="https://imgur.com/dCuiRee.png" class="avatar" />
+        <div class="bubble coach">
+          <p>{{ item.response }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Réponse en cours de saisie -->
+    <div *ngIf="typedResponse" class="bubble-wrapper coach">
+      <img src="https://imgur.com/dCuiRee.png" class="avatar" />
+      <div class="bubble coach animated">
+        <p>{{ typedResponse }}</p>
+      </div>
+    </div>
+
+    <!-- Animation typing -->
+    <div *ngIf="isLoading" class="bubble-wrapper coach">
+      <img src="https://imgur.com/dCuiRee.png" class="avatar" />
+      <div class="bubble coach typing">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <button (click)="toggleSpeech()" class="toggle-speech">
+      🔊 {{ speechEnabled ? 'Désactiver' : 'Activer' }} la voix
+    </button>
+
+    <div class="input-box">
+      <textarea [(ngModel)]="message" placeholder="Posez votre question..." rows="3"></textarea>
+      <button (click)="askCoach()">Envoyer</button>
+    </div>
+
+    <div class="pdf-button">
+      <button (click)="downloadPdf()">📄 Télécharger PDF</button>
+    </div>
+    
+    <button (click)="toggleListening()" class="toggle-mic">
+      🎙️ {{ isListening ? 'Arrêter' : 'Parler au coach' }}
+    </button>
+
+    <div class="mic-status">
+      <p *ngIf="isListening" class="mic-active">🎤 J'écoute... Parlez maintenant.</p>
+      <span [class.active]="isListening">
+        🎙️ {{ isListening ? 'Écoute en cours...' : 'Micro désactivé' }}
+      </span>
+    </div>
+    <div class="emotion-button">
+      <button (click)="analyzeEmotions()">🧠 Analyser mes émotions</button>
+    </div>
+    
+    
+  </div>
+</div>

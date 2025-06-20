@@ -1,0 +1,63 @@
+/* 🎥 Vidéo de fond */
+.video-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+@keyframes fadePulse {
+  0%   { opacity: 0.8; transform: scale(1.02); }
+  50%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.8; transform: scale(1.02); }
+}
+
+.video-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(60%) contrast(105%) saturate(120%);
+  animation: fadePulse 10s ease-in-out infinite;
+}
+
+
+/* 💠 Dashboard Style */
+.dashboard-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+/* Cartes en verre */
+.card-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  color: white;
+}
+
+/* Icônes rondes */
+.icon-lg {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+}
+
+/* Dot IA */
+.dot-status {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Responsive paddings */
+@media (max-width: 767px) {
+  .dashboard-content {
+    padding: 1rem;
+  }
+}

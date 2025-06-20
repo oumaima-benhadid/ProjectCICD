@@ -1,0 +1,20 @@
+<app-sidebar></app-sidebar>
+
+<div class="main-content" id="panel">
+
+  <!-- ✅ Navbar -->
+  <app-navbar></app-navbar>
+
+  <!-- ✅ Contenu principal -->
+  <div class="container-fluid mt--6">
+    <router-outlet></router-outlet>
+  </div>
+
+   <!-- Video Background -->
+   <video autoplay muted loop playsinline
+   style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+<source src="/assets/téléchargement.jpg" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+</div>

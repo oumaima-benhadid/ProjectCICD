@@ -1,0 +1,62 @@
+<div class="container my-5">
+  <h2 class="text-primary mb-4 fw-bold">🔄 Renouveler un abonnement</h2>
+
+  <form (ngSubmit)="renouveler()" #renouvForm="ngForm" novalidate>
+
+
+
+    <!-- Type -->
+    <div class="mb-3">
+      <label class="form-label">Type d’abonnement</label>
+      <select [(ngModel)]="typeAbonnement" (change)="calculateMontant()" name="typeAbonnement" class="form-select" required>
+        <option *ngFor="let type of typeOptions" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <!-- Durée -->
+    <div class="mb-3">
+      <label class="form-label">Durée</label>
+      <select [(ngModel)]="dureeAbonnement" (change)="calculateMontant()" name="dureeAbonnement" class="form-select" required>
+        <option *ngFor="let duree of dureeOptions" [value]="duree">{{ duree }}</option>
+      </select>
+    </div>
+
+    <!-- Montant -->
+    <div class="mb-3">
+      <label class="form-label">Montant calculé</label>
+      <input type="number" [(ngModel)]="montant" name="montant" class="form-control" readonly>
+    </div>
+    <!-- Montant initial -->
+<div class="mb-3">
+  <label class="form-label">💰 Montant initial</label>
+  <input type="number" [(ngModel)]="montantInitial" name="montantInitial" class="form-control" readonly>
+</div>
+
+<!-- Réduction appliquée -->
+<div class="mb-3" *ngIf="pointsFidelite >= 5">
+  <label class="form-label">🎁 Réduction ({{ pointsFidelite }}%)</label>
+  <input type="number" [(ngModel)]="reduction" name="reduction" class="form-control" readonly>
+</div>
+
+<!-- Montant final -->
+<div class="mb-3">
+  <label class="form-label">✅ Montant à payer</label>
+  <input type="number" [(ngModel)]="montantReduit" name="montantReduit" class="form-control" readonly>
+</div>
+
+<!-- Points fidélité -->
+<div class="mb-3">
+  <label class="form-label">Points de fidélité</label>
+  <input type="number" [(ngModel)]="pointsFidelite" name="pointsFidelite" class="form-control" readonly>
+</div>
+
+
+    <!-- Stripe -->
+    <div class="mb-3">
+      <label class="form-label">💳 Carte bancaire</label>
+      <div id="card-element" class="form-control p-3"></div>
+    </div>
+
+    <button class="btn btn-success" type="submit">Renouveler</button>
+  </form>
+</div>

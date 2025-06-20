@@ -1,0 +1,89 @@
+<section class="contact-hero d-flex align-items-center justify-content-center text-center">
+    <div class="overlay"></div>
+    <div class="container text-white">
+      <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">Contactez <span class="text-primary">FitMind</span></h1>
+      <p class="lead animate__animated animate__fadeInUp">Nous sommes là pour vous aider à libérer votre plein potentiel ✨</p>
+    </div>
+  </section>
+  
+  <section class="contact-section py-5">
+    <div class="container">
+      <div class="row g-5">
+  
+        <!-- FORMULAIRE -->
+        <div class="col-lg-7">
+          <div class="contact-form shadow p-4 rounded-4 bg-white animate__animated animate__fadeInLeft">
+            <h2 class="mb-4 text-primary">Envoyez-nous un message 📩</h2>
+            <form (ngSubmit)="sendMessage()" #contactForm="ngForm">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Votre nom" required [(ngModel)]="form.name" name="name">
+                <label for="name">Votre nom</label>
+              </div>
+            
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="subject" placeholder="Sujet" required [(ngModel)]="form.subject" name="subject">
+                <label for="subject">Sujet</label>
+              </div>
+            
+              <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Votre message" id="message" style="height: 150px" required [(ngModel)]="form.message" name="message"></textarea>
+                <label for="message">Message</label>
+              </div>
+            
+              <button type="submit" class="btn-send w-100" [disabled]="contactForm.invalid || loading">
+                <span *ngIf="!loading">Envoyer 🚀</span>
+                <span *ngIf="loading" class="spinner"></span>
+              </button>
+            </form>
+            
+          </div>
+        </div>
+  
+        <!-- INFOS DE CONTACT -->
+        <div class="col-lg-5">
+          <div class="contact-info bg-light shadow p-4 rounded-4 animate__animated animate__fadeInRight">
+            <h2 class="mb-4 text-primary">Nos coordonnées 📞</h2>
+  
+            <div class="mb-3 d-flex align-items-start">
+              <i class="bi bi-envelope-fill fs-3 me-3 text-primary"></i>
+              <div>
+                <h5>Email</h5>
+                <p>fittmindd@gmail.com</p>
+              </div>
+            </div>
+  
+            <div class="mb-3 d-flex align-items-start">
+              <i class="bi bi-telephone-fill fs-3 me-3 text-primary"></i>
+              <div>
+                <h5>Téléphone</h5>
+                <p>+216 71 123 456</p>
+              </div>
+            </div>
+  
+            <div class="mb-3 d-flex align-items-start">
+                <i class="bi bi-geo-alt-fill fs-3 me-3 text-primary"></i>
+                <div>
+                  <h5>Adresse</h5>
+                  <p>Zone Industrielle Chotrana II, B.P. 160, Pôle Technologique El Ghazela, 2083 Ariana, Tunis, Tunisie</p>
+                </div>
+              </div>
+                
+              <div class="map-container mt-4">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.171388777769!2d10.188469915233832!3d36.89818867993142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1302c9838f2824ad%3A0x735a0f24b38caefc!2sESPRIT%20Ecole%20Sup%C3%A9rieure%20Priv%C3%A9e%20d&#39;Ing%C3%A9nierie%20et%20de%20Technologie!5e0!3m2!1sfr!2stn!4v1615552294893!5m2!1sfr!2stn"
+                  width="100%"
+                  height="200"
+                  style="border:0;"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+                
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  

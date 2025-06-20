@@ -1,0 +1,89 @@
+<div class="container mt-4">
+  <h3>Liste des utilisateurs</h3>
+
+  <!-- 🔍 Filtres -->
+  <div class="row mb-3">
+    <div class="col-md-3">
+      <select class="form-select" [(ngModel)]="filterField" (change)="onFieldChange()">
+        <option value="">-- Filtrer par --</option>
+        <option value="nom">Nom</option>
+        <option value="prenom">Prénom</option>
+        <option value="sexe">Sexe</option>
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <ng-container [ngSwitch]="filterField">
+        <input *ngSwitchCase="'nom'" type="text" class="form-control" [(ngModel)]="filterValue" placeholder="Nom à rechercher">
+        <input *ngSwitchCase="'prenom'" type="text" class="form-control" [(ngModel)]="filterValue" placeholder="Prénom à rechercher">
+
+        <select *ngSwitchCase="'sexe'" class="form-select" [(ngModel)]="filterValue">
+          <option value="">-- Sexe --</option>
+          <option value="Homme">Homme</option>
+          <option value="Femme">Femme</option>
+        </select>
+
+        <select *ngSwitchCase="'banned'" class="form-select" [(ngModel)]="filterValue">
+          <option value="">-- Statut --</option>
+          <option value="true">Banni</option>
+          <option value="false">Actif</option>
+        </select>
+      </ng-container>
+    </div>
+
+    <div class="col-md-3">
+      <button class="btn btn-primary me-2" (click)="applyFilter()">Filtrer</button>
+      <button class="btn btn-secondary" (click)="clearFilter()">Réinitialiser</button>
+    </div>
+  </div>
+
+  <!-- 📋 Tableau utilisateurs -->
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Date Naissance</th>
+          <th>Sexe</th>
+          <th>Téléphone</th>
+          <th>Rôle</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.nom }}</td>
+          <td>{{ user.prenom }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.dateNaissance | date:'yyyy-MM-dd' }}</td>
+          <td>{{ user.sexe }}</td>
+          <td>{{ user.numeroDeTelephone }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <span class="badge" [ngClass]="user.banned ? 'bg-danger' : 'bg-success'">
+              {{ user.banned ? 'Banni' : 'Actif' }}
+            </span>
+          </td>
+          <td>
+            <button *ngIf="!user.banned" (click)="banUser(user.idUser)" class="btn btn-danger btn-sm">
+              Bannir
+            </button>
+            <button *ngIf="user.banned" (click)="unbanUser(user.idUser)" class="btn btn-success btn-sm">
+              Débannir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 🔁 Pagination -->
+  <div class="d-flex justify-content-between mt-3">
+    <button class="btn btn-outline-primary" (click)="prevPage()" [disabled]="page === 0">Précédent</button>
+    <span class="align-self-center">Page {{ page + 1 }} / {{ totalPages }}</span>
+    <button class="btn btn-outline-primary" (click)="nextPage()" [disabled]="page >= totalPages - 1">Suivant</button>
+  </div>
+</div>

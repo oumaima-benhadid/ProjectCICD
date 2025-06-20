@@ -1,0 +1,65 @@
+@import 'animate.css';
+
+.hero-healthy {
+  position: relative;
+  height: 100vh;
+  background-image: url('src/assets/front/img/sport-aliment.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px #ffffff, 0 0 20px #9b1d1d;
+  color: #ffffff;
+}
+
+.btn-glow {
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+
+.bg-light {
+  background-color: #f3f5fa !important;
+}
+
+.section-bg {
+  background-color: #f9fbfe;
+}
+
+img.img-fluid {
+  max-height: 250px;
+  object-fit: cover;
+}
+
+.card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 2rem;
+}

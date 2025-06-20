@@ -1,0 +1,68 @@
+:root {
+    --primary-color: #c0392b;
+    --secondary-bg: #ecf0f1;
+  }
+  
+  .contact-hero {
+    height: 75vh;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                url('src/assets/front/img/contact.jpg') center/cover no-repeat;
+    position: relative;
+  }
+  
+  .contact-hero .overlay {
+    position: absolute;
+    inset: 0;
+  }
+  
+  .contact-section {
+    background: var(--secondary-bg);
+  }
+  
+  .contact-form {
+    background: #fff;
+  }
+  
+  .contact-info {
+    background: #fff;
+  }
+  
+  .btn-send {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  
+  .btn-send:hover {
+    background-color: #96281b;
+  }
+  
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid white;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Map */
+  .map-container iframe {
+    border-radius: 10px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .contact-hero {
+      height: 60vh;
+    }
+  }

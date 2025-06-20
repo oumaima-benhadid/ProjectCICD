@@ -1,0 +1,154 @@
+/* Empêche le scroll horizontal */
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* HEADER */
+.header {
+  background: #ecf0f1;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.4s ease;
+}
+
+/* LOGO */
+.logo h1 {
+  font-size: 26px;
+  color: #c0392b;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* CONTAINER FIX */
+.container-xl {
+  padding: 0 15px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* NAV MENU */
+.navmenu ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.navmenu li {
+  position: relative;
+}
+
+.navmenu a {
+  font-weight: 600;
+  color: #333;
+  padding: 8px 14px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 25px;
+  text-decoration: none;
+}
+
+.navmenu a:hover,
+.navmenu .nav-link.active {
+  background-color: #c0392b;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(192, 57, 43, 0.6);
+}
+
+/* DROPDOWN */
+.dropdown ul {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  min-width: 180px;
+  z-index: 999;
+  padding: 10px 0;
+}
+
+.dropdown:hover ul {
+  display: block;
+}
+
+.dropdown ul li {
+  padding: 8px 15px;
+}
+
+.dropdown ul li a {
+  color: #333;
+  transition: color 0.3s;
+}
+
+.dropdown ul li a:hover {
+  color: #c0392b;
+}
+
+/* BUTTONS */
+.btn-getstarted,
+.btn-login {
+  background: #c0392b;
+  color: #fff;
+  padding: 8px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.btn-getstarted:hover,
+.btn-login:hover {
+  background: #96281b;
+}
+
+/* MOBILE NAV TOGGLE */
+.mobile-nav-toggle {
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+  color: #333;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .navmenu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: #fff;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 999;
+  }
+
+  .navmenu ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .navmenu ul li {
+    width: 100%;
+  }
+
+  .navmenu ul.show {
+    display: flex;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+}

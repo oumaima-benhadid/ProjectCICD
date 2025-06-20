@@ -1,0 +1,86 @@
+<form (ngSubmit)="submitForm()" #reclamationForm="ngForm" class="form-container animate-form">
+  <div class="form-group">
+    <label for="type">Type de réclamation</label>
+    <select class="form-control" id="type" [(ngModel)]="form.typeReclamation" name="typeReclamation" required>
+      <option [ngValue]="''" disabled selected>Sélectionnez un type</option>
+      <option [ngValue]="'Activite_Sportive'">Activité Sportive</option>
+      <option [ngValue]="'Evenement'">Événement</option>
+    </select>
+  </div>
+
+  <div *ngIf="form.typeReclamation === 'Activite_Sportive'" class="form-group mt-2">
+    <label for="seance">Séance concernée</label>
+    <select class="form-control" id="seance" [(ngModel)]="form.idSeanceSport" name="idSeanceSport">
+      <option [ngValue]="null" selected>-- Choisissez une séance --</option>
+      <option *ngFor="let seance of seancesDisponibles" [ngValue]="seance.id">
+        {{ seance.lieu }} - {{ seance.dateSeance | date:'shortDate' }}
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="form.typeReclamation === 'Evenement'" class="form-group mt-2">
+    <label for="evenement">Événement concerné</label>
+    <select class="form-control" id="evenement" [(ngModel)]="form.idEvenement" name="idEvenement">
+      <option [ngValue]="null" selected>-- Choisissez un événement --</option>
+      <option *ngFor="let event of evenementsDisponibles" [ngValue]="event.idEvenement">
+        {{ event.titre }} - {{ event.dateEvenement | date:'shortDate' }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group mt-2">
+    <label for="desc">Description</label>
+    <textarea class="form-control" id="desc" [(ngModel)]="form.description" name="description" required></textarea>
+  </div>
+
+  <button type="submit" class="btn-send mt-3" [disabled]="reclamationForm.invalid || loading">
+    <span *ngIf="!loading">Envoyer votre réclamation</span>
+    <span *ngIf="loading" class="spinner"></span>
+  </button>
+
+  <div *ngIf="successMsg" class="alert alert-success mt-3">
+    {{ successMsg }}
+  </div>
+  <div *ngIf="errorMsg" class="alert alert-danger mt-3">
+    {{ errorMsg }}
+  </div>
+</form>
+
+<!-- LISTE DES RECLAMATIONS -->
+<div class="reclamations-section animate-reclamations">
+  <h3 class="section-title">📋 Mes Réclamations</h3>
+
+  <div *ngIf="mesReclamations.length > 0; else noRecs" class="reclamations-grid">
+    <div class="reclamation-card animate-card" *ngFor="let rec of mesReclamations">
+      <h5 class="reclamation-type">{{ rec.typeReclamation }}</h5>
+
+      <div class="badge-container">
+        <span
+          [ngClass]="{
+            'badge-success': rec.statut === 'Résolue',
+            'badge-danger': rec.statut === 'Non_Résolue',
+            'badge-warning': rec.statut === 'En_Cours'
+          }">
+          {{ rec.statut }}
+        </span>
+      </div>
+
+      <div class="reclamation-dates">
+        <p>📅 Envoyée : <strong>{{ rec.dateReclamation | date:'mediumDate' }}</strong></p>
+
+        <p *ngIf="rec.dateResolution" class="resolved">
+          ✅ Résolue : <strong>{{ rec.dateResolution | date:'mediumDate' }}</strong><br>
+          ⏳ <small>en {{ getDaysBetween(rec.dateReclamation, rec.dateResolution) }} jours</small>
+        </p>
+
+        <p *ngIf="!rec.dateResolution" class="non-resolue">
+          ❗ Non résolue depuis {{ getDaysBetween(rec.dateReclamation, now) }} jours
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noRecs>
+    <div class="no-reclamation">Aucune réclamation pour l'instant 🔎</div>
+  </ng-template>
+</div>

@@ -1,0 +1,94 @@
+<div class="container mt-4">
+  <h2 class="mb-4"><i class="bi bi-clipboard-heart me-2"></i>Prédiction Nutritionnelle</h2>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <label class="form-label">
+        <i class="bi bi-bicycle me-1"></i> Activité
+      </label>
+      <select class="form-select" [(ngModel)]="activity">
+        <option value="musculation">Musculation</option>
+        <option value="running">Course</option>
+        <option value="cycling">Cyclisme</option>
+        <option value="swimming">Natation</option>
+        <option value="pilates">Pilates</option>
+        <option value="gym">gym</option>
+        <option value="yoga">yoga</option>
+        <option value="aerobic">aerobic</option>
+        <option value="zumba">zumba</option>
+        <option value="tennis">tennis</option>
+        <option value="basketball">basketball</option>
+        <option value="football">football</option>
+        <option value="boxe">boxe</option>
+        <option value="danse">danse</option>
+        <option value="volleyball">volleyball</option>
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">
+        <i class="bi bi-clock me-1"></i> Durée (min)
+      </label>
+      <input type="number" class="form-control" [(ngModel)]="duration" min="1">
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">
+        <i class="bi bi-geo-alt me-1"></i> Ville
+      </label>
+      <input type="text" class="form-control" [(ngModel)]="city" placeholder="Paris">
+    </div>
+    <button class="btn btn-primary w-100" (click)="getPrediction()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">
+        <i class="bi bi-bar-chart-line me-1"></i> Calculer
+      </span>
+      <span *ngIf="isLoading">
+        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+        Calcul...
+      </span>
+    </button>
+    <button class="btn btn-primary mt-3" (click)="navigateTodossier()">
+      <i class="bi bi-file-medical me-2"></i>Retour au dossier médical
+    </button>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle me-1"></i> {{ error }}
+  </div>
+
+  <div *ngIf="result" class="card">
+    <div class="card-header bg-primary text-white">
+      <i class="bi bi-bar-chart-fill me-1"></i> Résultats pour {{ result.ville || city }}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h5><i class="bi bi-cloud-sun me-1"></i> Données météo</h5>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item">
+              <i class="bi bi-thermometer-half me-1"></i>
+              <strong>Température:</strong> {{ result.temperature | number:'1.0-1' }} °C
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h5><i class="bi bi-nut me-1"></i> Recommandations nutritionnelles</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <i class="bi bi-fire me-1"></i>
+              <strong>Calories:</strong> {{ result.calories | number:'1.0-2' }} kcal
+            </li>
+            <li class="list-group-item">
+              <i class="bi bi-droplet-half me-1"></i>
+              <strong>Eau totale:</strong> {{ result.water | number:'1.0-2' }} litres
+            </li>
+            <li class="list-group-item">
+              <i class="bi bi-person-fill-up me-1"></i>
+              <strong>IMC:</strong> {{ result.imc | number:'1.0-2' }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

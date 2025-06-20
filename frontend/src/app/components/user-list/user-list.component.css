@@ -1,0 +1,116 @@
+/* 💳 Conteneur principal */
+.container {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    animation: fadeSlide 0.8s ease-in-out;
+  }
+  
+  /* ✨ Animation d’entrée */
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* 🧾 En-tête tableau */
+  .table thead {
+    background-color: #f8f9fa;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+  
+  .table th,
+  .table td {
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+  
+  /* 🖱️ Hover ligne */
+  .table tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: background 0.3s ease;
+  }
+  
+  /* 🔍 Inputs + Sélecteurs */
+  input[type="text"],
+  select.form-select {
+    border-radius: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid #ced4da;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  input:focus,
+  select:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  }
+  
+  /* 🏷️ Badges statut */
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 500;
+  }
+  
+  /* ✅ Statut couleurs */
+  .bg-danger {
+    background-color: #dc3545 !important;
+    color: white;
+  }
+  
+  .bg-success {
+    background-color: #28a745 !important;
+    color: white;
+  }
+  
+  /* 🛠 Boutons */
+  .btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    margin: 0.2rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .btn-outline-primary {
+    border-color: #0d6efd;
+    color: #0d6efd;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+  }
+  
+  /* 📱 Responsive */
+  @media (max-width: 768px) {
+    .table {
+      font-size: 0.85rem;
+    }
+  
+    input,
+    select,
+    .btn {
+      font-size: 0.75rem;
+    }
+  
+    .container {
+      padding: 1rem;
+    }
+  }
+  

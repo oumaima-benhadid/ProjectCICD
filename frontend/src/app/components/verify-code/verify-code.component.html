@@ -1,0 +1,30 @@
+<div class="container mt-5 w-50 mx-auto">
+    <h2>Vérification du code</h2>
+  
+    <div class="form-group">
+      <label>Code reçu par email</label>
+      <input [(ngModel)]="code" type="text" class="form-control" required />
+    </div>
+  
+    <button class="btn btn-primary w-100 mt-3" (click)="onVerify()" [disabled]="loadingVerify">
+      <span *ngIf="!loadingVerify">Vérifier le code</span>
+      <span *ngIf="loadingVerify">
+        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+        Vérification...
+      </span>
+    </button>
+      
+    <p *ngIf="error" class="text-danger mt-2">{{ error }}</p>
+    <p *ngIf="success" class="text-success mt-2">{{ success }}</p>
+  
+    <div class="text-center mt-3" *ngIf="showResend">
+      <button (click)="resendCode()" class="btn btn-link" [disabled]="loadingResend">
+        <span *ngIf="!loadingResend">🔁 Renvoyer le code</span>
+        <span *ngIf="loadingResend">
+          <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+          Envoi...
+        </span>
+      </button>
+          </div>
+  </div>
+  

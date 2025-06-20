@@ -1,0 +1,67 @@
+<!-- Ajoute ça dans ton fichier Angular HTML -->
+<div class="container mt-5">
+  <h1 class="text-center text-primary mb-4">
+    <i class="bi bi-folder2-open"></i> Liste des Dossiers Médicaux
+  </h1>
+
+  <div *ngIf="dossiers.length > 0; else noDossiers">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle shadow" style="background-color: #f1f1f1; border-radius: 10px;">
+        <thead class="table-primary text-white">
+          <tr>
+            <th><i class="bi bi-virus"></i> Maladies</th>
+            <th><i class="bi bi-heart-pulse"></i> Objectif Santé</th>
+            <th><i class="bi bi-capsule"></i> Traitements</th>
+            <th><i class="bi bi-droplet-half"></i> Groupe Sanguin</th>
+            <th><i class="bi bi-exclamation-triangle-fill"></i> Allergies</th>
+            <th><i class="bi bi-person-fill-up"></i> Poids</th>
+            <th><i class="bi bi-rulers"></i> Tailles</th>
+            <th><i class="bi bi-activity"></i> IMC</th>
+            <th><i class="bi bi-calendar-check"></i> RDV</th>
+            <th><i class="bi bi-gear-fill"></i> Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dossier of dossiers">
+            <td>{{ dossier.maladies }}</td>
+            <td><span class="badge bg-info text-dark">{{ dossier.objectifSante }}</span></td>
+            <td>{{ dossier.traitements }}</td>
+            <td><span class="badge bg-info ">{{ dossier.groupeSanguin }}</span></td>
+            <td>
+              <span *ngIf="dossier.allergies; else noAllergy" class="badge bg-danger">{{ dossier.allergies }}</span>
+              <ng-template #noAllergy><span class="text-muted">Aucune</span></ng-template>
+            </td>
+            <td>{{ dossier.poids }} kg</td>
+            <td>{{ dossier.tailles }} cm</td>
+            <td>
+              <span *ngIf="dossier.imc; else noImc" class="badge bg-success">{{ dossier.imc }}</span>
+              <ng-template #noImc>N/A</ng-template>
+            </td>
+            <td>
+              <i *ngIf="dossier.rdvRecommande" class="bi bi-check-circle-fill text-success"></i>
+              <i *ngIf="!dossier.rdvRecommande" class="bi bi-x-circle-fill text-danger"></i>
+              {{ dossier.rdvRecommande ? 'Oui' : 'Non' }}
+            </td>
+            <td>
+              <button 
+                class="btn btn-sm" 
+                [ngClass]="dossier.rdvRecommande ? 'btn-outline-danger' : 'btn-outline-success'" 
+                (click)="updateRdvRecommande(dossier)"
+              >
+                <i 
+                  class="bi" 
+                  [ngClass]="dossier.rdvRecommande ? 'bi-x-circle' : 'bi-check2-circle'"
+                ></i>
+                {{ dossier.rdvRecommande ? 'Annuler RDV' : 'Recommander RDV' }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #noDossiers>
+    <p class="text-muted text-center mt-3">Aucun dossier médical disponible.</p>
+  </ng-template>
+</div>

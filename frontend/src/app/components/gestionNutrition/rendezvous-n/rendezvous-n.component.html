@@ -1,0 +1,84 @@
+<div class="card shadow-lg border-0 mt-5" style="background: linear-gradient(135deg, #e0f7fa, #ffffff); border-radius: 20px;">
+  <div class="card-body">
+    <h3 class="text-center mb-4" style="color: #2c3e50; font-weight: 700; font-family: 'Segoe UI', sans-serif;">
+      📆 <span style="color: #00cec9;">Mes Rendez-vous</span>
+    </h3>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle text-center" style="border-radius: 15px; overflow: hidden;">
+        <thead style="background-color: #00bcd4; color: white; font-weight: bold;">
+          <tr>
+            <th style="font-weight: bold; color: #1e88e5;">
+              <i class="bi bi-calendar-event-fill me-1"></i> Date & Heure
+            </th>
+            <th style="font-weight: bold; color: #00796b;">
+              <i class="bi bi-hourglass-split me-1"></i> Durée
+            </th>
+            <th style="font-weight: bold; color: #6a1b9a;">
+              <i class="bi bi-chat-left-text me-1"></i> Remarque
+            </th>
+            <th style="font-weight: bold; color: #f4511e;">
+              <i class="bi bi-check2-circle me-1"></i> Statut
+            </th>
+            <th style="font-weight: bold; color: #2e7d32;">
+              <i class="bi bi-pencil-square me-1"></i> Modifier
+            </th>
+          </tr>
+          
+        </thead>
+        <tbody>
+          <tr *ngFor="let rdv of rendezvousList" 
+              style="transition: all 0.3s; background-color: #ffffff;" 
+              onmouseover="this.style.backgroundColor='#e3f2fd'" 
+              onmouseout="this.style.backgroundColor='#ffffff'">
+              
+            <td><strong style="color: #2c3e50;"><i class="bi bi-clock-history me-1 text-primary"></i>{{ rdv.dateHeure | date: 'short' }}</strong></td>
+            
+            <td>
+              <span class="badge rounded-pill bg-info text-dark px-3 py-2" style="font-size: 0.9em;">
+                ⏱ {{ rdv.duree }} min
+              </span>
+            </td>
+
+            <td style="font-style: italic; color: #546e7a;">
+              <i class="bi bi-pencil me-1 text-secondary"></i>{{ rdv.remarque }}
+            </td>
+
+            <!-- Affichage coloré selon le statut -->
+            <td>
+              <span class="badge rounded-pill px-3 py-2 text-uppercase"
+                [ngClass]="{
+                  'bg-success': rdv.statut === 'ACCEPTE',
+                  'bg-primary': rdv.statut === 'EN_COURS',
+                  'bg-danger': rdv.statut === 'REFUSE'
+                }"
+                style="font-size: 0.85em;">
+                <i class="bi"
+                  [ngClass]="{
+                    'bi-check-circle-fill me-1': rdv.statut === 'ACCEPTE',
+                    'bi-hourglass-split me-1': rdv.statut === 'EN_COURS',
+                    'bi-x-circle-fill me-1': rdv.statut === 'REFUSE'
+                  }">
+                </i>
+                {{ rdv.statut }}
+              </span>
+            </td>
+
+            <!-- Sélecteur pour modifier le statut -->
+            <td>
+              <select class="form-select form-select-sm rounded-pill px-2 py-1 border-0 shadow-sm"
+                      style="background-color: #f0f4f8; width: auto;"
+                      [ngModel]="rdv.statut"
+                      (ngModelChange)="updateStatut(rdv, $event)">
+                <option *ngFor="let s of statutOptions" [ngValue]="s">{{ s }}</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-primary mt-3" (click)="navigateTodossierN()">
+        <i class="bi bi-file-medical me-2"></i>retourner vers le dossier médical
+      </button>
+    </div>
+  </div>
+</div>

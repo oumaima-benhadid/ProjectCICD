@@ -1,0 +1,114 @@
+.register-page {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #f7f7f7, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Cercles d'ambiance */
+.register-page::before, .register-page::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.register-page::before {
+    width: 800px;
+    height: 800px;
+    top: -200px;
+    left: -200px;
+    background: radial-gradient(circle, #b3001b33, transparent 70%);
+}
+
+.register-page::after {
+    width: 500px;
+    height: 500px;
+    bottom: -150px;
+    right: -150px;
+    background: radial-gradient(circle, #b3001b22, transparent 70%);
+}
+
+/* Carte formulaire */
+.register-card {
+    background: #fff;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.08);
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    animation: fadeInUp 0.7s ease forwards;
+}
+
+/* Titres */
+.register-card h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #b3001b;
+}
+
+.register-card p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Formulaires */
+.form-control {
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+select.form-control {
+    appearance: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23b3001b' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 5.646a.5.5 0 0 1 .708 0L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") no-repeat right 1rem center/1rem auto;
+}
+
+/* Bouton */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    padding: 0.75rem;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Alertes */
+.alert {
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+}
+
+/* Lien */
+.text-center a {
+    color: #b3001b;
+    font-weight: 600;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

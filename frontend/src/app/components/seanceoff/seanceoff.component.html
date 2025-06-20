@@ -1,0 +1,60 @@
+<div class="container my-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold display-6 text-dark">
+      📅 Séances pour <span class="text-primary">{{ activiteNom }}</span>
+    </h2>
+    <p class="text-muted">Choisis une séance pour réserver ta place</p>
+  </div>
+
+  <!-- ✅ Séances disponibles -->
+  <div *ngIf="seances.length > 0; else noSeances">
+    <div class="d-flex flex-wrap justify-content-center gap-4">
+      <div
+        class="session-card p-4 shadow rounded"
+        *ngFor="let seance of seances.filter(isSeanceValide); let i = index">
+
+        <div class="d-flex align-items-center mb-3">
+          <div class="session-icon me-3">
+            <i class="bi bi-calendar-event-fill text-white fs-4"></i>
+          </div>
+          <div>
+            <h5 class="mb-1 fw-bold text-primary">Séance {{ i + 1 }}</h5>
+          </div>
+        </div>
+
+        <p class="mb-1"><strong>Date :</strong> {{ seance.dateSeance }}</p>
+        <p class="mb-3"><strong>Heure :</strong> {{ seance.heureDebut }}</p>
+
+        <div class="mb-3">
+          <span *ngIf="seance.capaciteDispo > 0"
+                class="badge bg-success-subtle text-success rounded-pill px-3 py-2">
+            ✅ {{ seance.capaciteDispo }} places restantes
+          </span>
+          <span *ngIf="seance.capaciteDispo === 0"
+                class="badge bg-danger-subtle text-danger rounded-pill px-3 py-2">
+            ❌ Complet
+          </span>
+        </div>
+
+        <button class="btn btn-reserver w-100"
+                [class.disabled]="seance.capaciteDispo === 0"
+                [disabled]="seance.capaciteDispo === 0"
+                (click)="reserverSeance(seance.id!)">
+          {{ seance.capaciteDispo === 0 ? 'Complet ❌' : 'Réserver cette séance' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- 🔙 Retour -->
+    <div class="text-center mt-5">
+      <button class="btn btn-outline-dark px-4 py-2 rounded-pill" (click)="retour()">
+        ⬅️ Retour aux activités
+      </button>
+    </div>
+  </div>
+
+  <!-- ❌ Aucune séance -->
+  <ng-template #noSeances>
+    <p class="text-center text-muted fs-5 mt-5">Aucune séance disponible pour cette activité.</p>
+  </ng-template>
+</div>

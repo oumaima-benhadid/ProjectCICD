@@ -1,0 +1,247 @@
+.coach-container {
+  max-width: 2000;    
+  height: 150vh;          
+  margin: 4rem auto;
+  padding: 2rem;
+  background: var(--background, #fff);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: #f9f9f9;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  scroll-behavior: smooth;
+  min-height: 500px;     /* ⬆️ Hauteur minimum plus grande */
+  max-height: 70vh;      /* ⬆️ Plafond de hauteur */
+}
+
+.bubble-wrapper {
+  display: flex;
+  margin: 0.5rem 0;
+}
+
+.bubble-wrapper.user {
+  justify-content: flex-end;
+}
+
+.bubble-wrapper.coach {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 85%;
+  padding: 0.75rem 1rem;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  word-break: break-word;
+}
+
+.bubble.user {
+  background: #d4f8c6;
+  color: #333;
+  border-bottom-right-radius: 0;
+}
+
+.bubble.coach {
+  background: #ececec;
+  border-bottom-left-radius: 0;
+}
+
+.loading {
+  font-style: italic;
+  color: #777;
+}
+
+.bottom-bar {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.input-box {
+  display: flex;
+  gap: 0.5rem;
+}
+
+textarea {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: none;
+  font-family: inherit;
+}
+
+button {
+  padding: 0.6rem 1rem;
+  background-color: #9c98a2;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;}
+
+button:hover {
+  background-color: #3700b3;
+}
+
+.clear-button {
+  text-align: right;
+}
+
+.animated {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.toggle-mic {
+  background-color: #00c853;
+}
+.toggle-mic:hover {
+  background-color: #009624;
+}
+.mic-active {
+  color: green;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.typing {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #ececec;
+  border-radius: 18px;
+  max-width: fit-content;
+  height: 40px;
+}
+
+.typing .dot {
+  width: 8px;
+  height: 8px;
+  background-color: #888;
+  border-radius: 50%;
+  animation: blink 1.2s infinite;
+}
+
+.typing .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
+}
+.bubble-wrapper.coach {
+  align-items: flex-start;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+.pdf-button {
+  text-align: right;
+}
+
+.pdf-button button {
+  background: #00bfa5;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pdf-button button:hover {
+  background-color: #008e76;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark-mode .coach-container {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+}
+
+body.dark-mode .chat-box {
+  background-color: #222;
+  border-color: #444;
+}
+
+body.dark-mode .bubble.user {
+  background-color: #2e7d32;
+  color: white;
+}
+
+body.dark-mode .bubble.coach {
+  background-color: #333;
+  color: white;
+}
+
+body.dark-mode textarea {
+  background-color: #1c1c1c;
+  color: white;
+  border: 1px solid #555;
+}
+
+body.dark-mode button {
+  background-color: #333;
+  color: white;
+  border: none;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  background: #f1f1f1;
+  color: #222;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+body.dark-mode .theme-toggle {
+  background: #333;
+  color: white;
+  border: 1px solid #888;
+}body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

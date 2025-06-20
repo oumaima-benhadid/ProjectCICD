@@ -1,0 +1,159 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-5 text-center mb-4">
+  <h4 class="text-primary mb-4  text-center mb-4">
+    <i class="bi bi-calendar-event"></i> Séances liées à l'activité <strong>{{ activiteName }}</strong>
+  </h4>
+
+
+  <!-- Bouton Ajouter une séance -->
+  <button class="btn btn-success mb-3" (click)="openAddSeanceForm()">
+    <i class="bi bi-plus-circle"></i> Ajouter une séance
+  </button>
+
+  <!-- Tableau des séances -->
+  <table class="table table-striped table-bordered text-center" *ngIf="seances.length > 0">
+    <thead class="table-light">
+      <tr>
+        <th>Date</th>
+        <th>Début</th>
+        <th>Fin</th>
+        <th>Capacité Dispo</th>
+        <th>Lieu</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of seances">
+        <td>{{ s.dateSeance | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ s.heureDebut }}</td>
+        <td>{{ s.heureFin }}</td>
+        <td [class.text-danger]="s.capaciteDispo === 0">{{ s.capaciteDispo }}</td>
+        <td>{{ s.lieu }}</td>
+        <td>
+          <button class="btn btn-warning btn-icon" (click)="openEditSeanceForm(s)">
+            ✏️
+          </button>
+
+          <!-- Bouton Supprimer -->
+          <button class="btn btn-danger btn-icon" (click)="deleteSeance(s.id)">
+            🗑️
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Message si aucune séance n'est trouvée -->
+  <div *ngIf="seances.length === 0" class="alert alert-info text-center">
+    Aucune séance trouvée pour cette activité.
+  </div>
+
+  <a routerLink="/admin-coach/activite-back" class="btn btn-secondary mt-3">
+    <i class="bi bi-arrow-left"></i> Retour à la liste des activités
+  </a>
+
+  <div *ngIf="showForm" class="card shadow-sm border-0 p-4 mt-5">
+    <h5>{{ isEditMode ? 'Modifier la séance' : 'Ajouter une séance' }}</h5>
+    <form (ngSubmit)="submitSeanceForm()" #seanceForm="ngForm">
+      <!-- Heure de début -->
+      <div class="mb-3">
+        <label for="heureDebut" class="form-label">Heure de début</label>
+        <input
+          type="time"
+          id="heureDebut"
+          [(ngModel)]="currentSeance.heureDebut"
+          name="heureDebut"
+          class="form-control"
+          required
+          #heureDebut="ngModel"
+        />
+        <div *ngIf="heureDebut.invalid && heureDebut.touched" class="text-danger">
+          <small>L'heure de début est obligatoire.</small>
+        </div>
+      </div>
+
+      <!-- Heure de fin -->
+      <div class="mb-3">
+        <label for="heureFin" class="form-label">Heure de fin</label>
+        <input
+          type="time"
+          id="heureFin"
+          [(ngModel)]="currentSeance.heureFin"
+          name="heureFin"
+          class="form-control"
+          required
+          #heureFin="ngModel"
+        />
+        <div *ngIf="heureFin.invalid && heureFin.touched" class="text-danger">
+          <small>L'heure de fin est obligatoire.</small>
+        </div>
+      </div>
+
+
+      <!-- Capacité disponible -->
+      <div class="mb-3">
+        <label for="capaciteDispo" class="form-label">Capacité disponible</label>
+        <input
+          type="number"
+          id="capaciteDispo"
+          [(ngModel)]="currentSeance.capaciteDispo"
+          name="capaciteDispo"
+          class="form-control"
+          required
+          min="0"
+          #capaciteDispo="ngModel"
+        />
+        <div *ngIf="capaciteDispo.invalid && capaciteDispo.touched" class="text-danger">
+          <small>La capacité disponible ne peut pas être négative.</small>
+        </div>
+      </div>
+
+      <!-- Lieu -->
+      <div class="mb-3">
+        <label for="lieu" class="form-label">Lieu</label>
+        <input
+          type="text"
+          id="lieu"
+          [(ngModel)]="currentSeance.lieu"
+          name="lieu"
+          class="form-control"
+          required
+          minlength="2"
+          maxlength="100"
+          #lieu="ngModel"
+        />
+        <div *ngIf="lieu.invalid && lieu.touched" class="text-danger">
+          <small *ngIf="lieu.errors?.['required']">Le lieu est obligatoire.</small>
+          <small *ngIf="lieu.errors?.['minlength']">Le lieu doit contenir au moins 2 caractères.</small>
+          <small *ngIf="lieu.errors?.['maxlength']">Le lieu ne peut pas dépasser 100 caractères.</small>
+        </div>
+      </div>
+
+      <!-- Date de la séance -->
+      <div class="mb-3">
+        <label for="dateSeance" class="form-label">Date de la séance</label>
+        <input
+  type="date"
+  id="dateSeance"
+  [(ngModel)]="currentSeance.dateSeance"
+  name="dateSeance"
+  class="form-control"
+  required
+  [min]="today"
+  #dateSeance="ngModel"
+/>
+
+        <div *ngIf="dateSeance.invalid && dateSeance.touched" class="text-danger">
+          <small>La date de la séance est obligatoire.</small>
+        </div>
+      </div>
+
+      <!-- Boutons -->
+      <button type="submit" class="btn btn-primary" [disabled]="seanceForm.invalid">
+        {{ isEditMode ? 'Modifier' : 'Ajouter' }}
+      </button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="cancelForm()">Annuler</button>
+    </form>
+  </div>
+</div>

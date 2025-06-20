@@ -1,0 +1,152 @@
+/* FORMULAIRE */
+.form-container {
+    background: #ecf0f1;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(192, 57, 43, 0.2);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  
+  .form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #c0392b;
+  }
+  
+  .floating-label {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .floating-label input,
+  .floating-label select,
+  .floating-label textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #bdc3c7;
+    background: transparent;
+    padding: 8px 5px;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+  }
+  
+  .floating-label label {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    font-size: 1rem;
+    color: #7f8c8d;
+    pointer-events: none;
+    transition: 0.3s;
+  }
+  
+  .floating-label input:focus + label,
+  .floating-label select:focus + label,
+  .floating-label textarea:focus + label,
+  .floating-label input:not(:placeholder-shown) + label,
+  .floating-label textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 0.8rem;
+    color: #c0392b;
+  }
+  
+  .btn-send {
+    width: 100%;
+    padding: 12px;
+    background: #c0392b;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .btn-send:hover {
+    background: #96281b;
+  }
+  
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* RECLAMATIONS */
+  .reclamations-section {
+    margin-top: 50px;
+  }
+  
+  .reclamations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .reclamation-card {
+    background: #ecf0f1;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(192, 57, 43, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .reclamation-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(192, 57, 43, 0.25);
+  }
+  
+  .badge-success {
+    background: #27ae60;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+  }
+  
+  .badge-danger {
+    background: #c0392b;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+  }
+  
+  .badge-warning {
+    background: #f39c12;
+    color: #2c3e50;
+    padding: 5px 15px;
+    border-radius: 20px;
+  }
+  
+  .no-reclamation {
+    text-align: center;
+    color: #7f8c8d;
+    margin-top: 20px;
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-form {
+    animation: fadeInUp 1s ease forwards;
+  }
+  
+  .animate-reclamations {
+    animation: fadeInUp 1.5s ease forwards;
+  }
+  
+  .animate-card {
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  

@@ -1,0 +1,166 @@
+/* 💳 Tableau stylisé */
+.table {
+  border-radius: 1rem;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.82);
+  animation: fadeSlide 0.8s ease-in-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ✨ Animation */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🧾 En-tête */
+.table thead {
+  background: linear-gradient(to right, #343a40, #495057);
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  padding: 0.8rem 1rem;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: background 0.3s ease;
+}
+
+/* 🏷️ Badge */
+.badge {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 1.2rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* 🎛️ Select */
+.form-select {
+  font-size: 0.85rem;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  transition: box-shadow 0.2s ease;
+  border: 1px solid #ced4da;
+}
+
+.form-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* 🛠️ Boutons */
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  margin: 0 0.2rem;
+}
+
+.btn-sm:hover {
+  transform: scale(1.05);
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-outline-success {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.85rem;
+  }
+
+  .form-select,
+  .btn-sm {
+    font-size: 0.75rem;
+  }
+}
+
+/* 🧩 Conteneur centré */
+.reclamation-container {
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  animation: fadeSlide 0.8s ease-in-out;
+}
+
+@media (min-width: 1400px) {
+  .reclamation-container {
+    max-width: 75%;
+  }
+}
+
+/* 🎥 Vidéo de fond */
+.video-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -100;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.video-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(60%) saturate(120%) contrast(110%);
+  animation: pulse 20s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1.01);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 📦 Contenu sur la vidéo */
+.dashboard-content {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+}

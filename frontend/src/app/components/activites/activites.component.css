@@ -1,0 +1,94 @@
+/* === SECTION FOND === */
+.section-activites-pro {
+  background: linear-gradient(to bottom right, #f4f7fb, #ffffff);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* === PLANNING PRO STYLE === */
+.planning-card-pro {
+  background-color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.planning-card-pro:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+  transform: translateY(-2px);
+}
+
+.icon-wrapper {
+  min-width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #1976d2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === BADGE SUBTLE === */
+.badge.bg-danger-subtle {
+  background-color: #fdecea;
+  color: #d32f2f;
+  font-size: 0.85rem;
+  border-radius: 0.75rem;
+}
+
+/* === ACTIVITÉS === */
+.card-activity-pro {
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.card-activity-pro:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+.card-activity-pro .card-img-top {
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-footer {
+  font-size: 0.9rem;
+}
+
+/* === BADGE TOP === */
+.position-absolute.z-1 {
+  font-size: 0.75rem;
+  z-index: 2;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .planning-card-pro {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .icon-wrapper {
+    margin-bottom: 0.5rem;
+  }
+
+  .bg-danger {
+    background-color: #dc3545 !important;
+  }
+
+  .badge-top {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-weight: bold;
+  }
+
+
+}

@@ -1,0 +1,235 @@
+
+<br>
+<br>
+<div class="container-fluid py-5">
+  <div class="card shadow border-0 rounded-4 mb-4">
+    <div class="card-header bg-gradient-primary py-4 d-flex justify-content-between align-items-center rounded-top-4">
+      <h4 class="text-white mb-0">
+        <i class="fas fa-calendar-alt me-2"></i> Liste des Événements
+      </h4>
+      <button class="btn btn-light btn-sm shadow-sm px-3" (click)="toggleForm()">
+        <i class="fas fa-plus-circle text-success me-1"></i> Ajouter Événement
+      </button>
+    </div>
+
+    <!-- Formulaire affiché en haut, intégré -->
+    <div *ngIf="showForm" class="mt-4 px-4 pb-3 border-bottom">
+      <app-add-event (onClose)="closeForm()"></app-add-event>
+    </div>
+
+    <div class="card-body px-4">
+      <!-- Search box with filter options -->
+      <div class="row mb-4 mt-2">
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-1">
+              <i class="fas fa-search"></i>
+            </span>
+            <input type="text" [(ngModel)]="SearchText" class="form-control border-1 shadow-sm"
+              placeholder="Rechercher un événement par titre...">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-end">
+            <select [(ngModel)]="filterStatus" class="form-select border-1 shadow-sm me-2" style="max-width: 200px;">
+              <option value="ALL">Tous les états</option>
+              <option value="EN_COURS">En cours</option>
+              <option value="A_VENIR">À venir</option>
+              <option value="PASSE">Passé</option>
+            </select>
+            <select [(ngModel)]="filterType" class="form-select border-1 shadow-sm" style="max-width: 200px;">
+              <option value="">Tous les types</option>
+              <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events table -->
+      <div class="table-responsive">
+        <table class="table align-items-center table-striped table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>#</th>
+              <th>Libellé</th>
+              <th>Lieu</th>
+              <th>Date Début</th>
+              <th>Date Fin</th>
+              <th>Capacité</th>
+              <th>Type</th>
+              <th>État</th>
+              <th>Image</th>
+              <th class="text-center" colspan="3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of filteredList() | paginate: { itemsPerPage: 8, currentPage: p }" 
+                [class.table-warning]="item.etatEvent === 'EN_COURS'"
+                [class.table-success]="item.etatEvent === 'A_VENIR'"
+                [class.table-secondary]="item.etatEvent === 'PASSE'">
+              <td>{{ item.idEvenement }}</td>
+              <td><span class="fw-bold">{{ item.titre }}</span></td>
+              <td>{{ item.lieu }}</td>
+              <td>{{ item.dateEvenement | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td>{{ item.dateFin | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td>{{ item.capaciteMax }}</td>
+              <td><span class="badge bg-info text-white">{{ item.typeEvenement }}</span></td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-success': item.etatEvent === 'A_VENIR',
+                  'bg-warning text-dark': item.etatEvent === 'EN_COURS',
+                  'bg-danger': item.etatEvent === 'PASSE'
+                }">
+                  {{ item.etatEvent === 'A_VENIR' ? 'À venir' : (item.etatEvent === 'EN_COURS' ? 'En cours' : 'Passé') }}
+                </span>
+              </td>
+              <td>
+                <img *ngIf="item.idEvenement"
+                [src]="'http://localhost:8081/PIdev/api/events/images/' + item.idEvenement"
+                     height="50" class="rounded shadow-sm" 
+                     onerror="this.src='assets/img/event-placeholder.jpg'; this.onerror=null;"
+                     alt="Image événement" />
+              </td>
+              <td class="text-center">
+                <button class="btn btn-warning btn-sm"
+                        [disabled]="item.etatEvent === 'PASSE'"
+                        (click)="editForm(item)"
+                        title="Modifier">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-danger btn-sm"
+                        [disabled]="item.etatEvent === 'PASSE' || item.etatEvent === 'EN_COURS'"
+                        (click)="removeData(item.idEvenement)"
+                        title="Supprimer">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-info btn-sm" 
+                        (click)="viewInscriptions(item.idEvenement)"
+                        title="Voir les participants">
+                  <i class="fas fa-users text-white"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="filteredList().length === 0">
+              <td colspan="12" class="text-center text-muted py-4">
+                <i class="fas fa-search fa-2x mb-3 text-secondary"></i>
+                <p>Aucun événement ne correspond à vos critères de recherche.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination controls -->
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <div class="text-muted">
+          Total: {{ filteredList().length }} événement(s)
+        </div>
+        <pagination-controls (pageChange)="p = $event" 
+                             [autoHide]="true"
+                             previousLabel="Précédent"
+                             nextLabel="Suivant">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour les inscriptions -->
+<div *ngIf="showInscriptions" class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-gradient-primary text-white">
+        <h5 class="modal-title">
+          <i class="fas fa-users me-2"></i> Participants à l'événement
+        </h5>
+        <button type="button" class="btn-close bg-white" (click)="closeInscriptions()"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Filter for inscriptions -->
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-white">
+            <i class="fas fa-filter"></i>
+          </span>
+          <select [(ngModel)]="inscriptionStatusFilter" class="form-select" (change)="applyInscriptionFilter()">
+            <option value="ALL">Tous les statuts</option>
+            <option value="EN_ATTENTE">En attente</option>
+            <option value="CONFIRMEE">Confirmée</option>
+            <option value="ANNULEE">Annulée</option>
+          </select>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Date d'inscription</th>
+                <th>Statut</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let inscription of filteredInscriptions">
+                <td>{{ inscription.idInscription }}</td>
+                <td>{{ inscription.nom }} {{ inscription.prenom }}</td>
+                <td>{{ inscription.email }}</td>
+                <td>{{ inscription.dateInscription | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'bg-warning text-dark': inscription.statutInscription === 'EN_ATTENTE',
+                    'bg-success': inscription.statutInscription === 'CONFIRMEE',
+                    'bg-danger': inscription.statutInscription === 'ANNULEE'
+                  }">
+                    {{ inscription.statutInscription }}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <div class="btn-group" *ngIf="inscription.statutInscription === 'EN_ATTENTE' && isEventEditable()">
+                    <button type="button" class="btn btn-success btn-sm" 
+                            (click)="updateInscriptionStatus(inscription.idInscription, 'CONFIRMEE')" 
+                            title="Confirmer">
+                      <i class="fas fa-check"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" 
+                            (click)="updateInscriptionStatus(inscription.idInscription, 'ANNULEE')" 
+                            title="Annuler">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                  <span *ngIf="inscription.statutInscription !== 'EN_ATTENTE' || !isEventEditable()" class="text-muted">
+                    <i class="fas fa-lock"></i> Statut verrouillé
+                  </span>
+                  
+                </td>
+              </tr>
+              <tr *ngIf="filteredInscriptions.length === 0">
+                <td colspan="6" class="text-center text-muted py-4">
+                  <i class="fas fa-users-slash fa-2x mb-3"></i>
+                  <p>Aucune inscription pour cet événement.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="me-auto">
+          <strong>Total:</strong> {{ filteredInscriptions.length }} participant(s)
+        </span>
+        <button type="button" class="btn btn-secondary" (click)="closeInscriptions()">
+          <i class="fas fa-times me-1"></i> Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay pour le modal -->
+<div *ngIf="showInscriptions" class="modal-backdrop show"></div>

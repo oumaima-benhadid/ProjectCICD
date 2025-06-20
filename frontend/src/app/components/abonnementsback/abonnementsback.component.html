@@ -1,0 +1,122 @@
+<div class="video-bg-container">
+  <video autoplay muted loop playsinline class="video-bg">
+    <source src="assets/FitMind.mp4" type="video/mp4" />
+    Votre navigateur ne supporte pas la vidéo HTML5.
+  </video>
+</div>
+
+
+<div class="container-fluid mt-5 pt-4">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+
+        <!-- En-tête -->
+        <div class="card-header border-0">
+          <h3 class="mb-0 text-primary">📋 Liste des Abonnements</h3>
+          <button class="btn btn-outline-secondary" [routerLink]="['/admin/statabonnement']">
+            <i class="fas fa-chart-pie"></i> Statistiques
+          </button>
+        </div>
+
+        <!-- Recherche & tri -->
+        <div class="px-4 py-2 d-flex flex-wrap justify-content-between align-items-center">
+          <div class="input-group w-50 mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+            <input type="text" [(ngModel)]="searchKeyword" (ngModelChange)="search()" class="form-control" placeholder="Rechercher...">
+          </div>
+
+          <div class="d-flex gap-2 mb-2">
+            <select class="form-control" (change)="changeSorting($event)">
+              <option value="dateCreation">Date création</option>
+              <option value="statut">Statut</option>
+              <option value="montant">Montant</option>
+              <option value="typeAbonnement">Type</option>
+              <option value="dureeAbonnement">Durée</option>
+            </select>
+            <button class="btn btn-outline-primary" (click)="toggleSortDirection()">
+              <i class="fas fa-sort"></i> {{ direction === 'asc' ? 'Ascendant' : 'Descendant' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Tableau -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th>Nom</th>
+                <th>Date Création</th>
+                <th>Statut</th>
+                <th>Durée</th>
+                <th>Profil IA</th>
+                <th>Prédiction Renouvellement</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ab of abonnements">
+                <td>{{ ab.nomUtilisateur }}</td>
+                <td>{{ ab.dateCreation | date: 'short' }}</td>
+                <td>{{ ab.statut }}</td>
+                <td>{{ ab.dureeAbonnement }}</td>
+
+                <!-- Profil IA -->
+                <td>
+                  <ng-container *ngIf="ab.idUtilisateur != null">
+                    <span *ngIf="profilsIA[ab.idUtilisateur]; else loadingProfil">
+                      {{ profilsIA[ab.idUtilisateur] }}
+                    </span>
+                    <ng-template #loadingProfil><span class="text-muted">Chargement...</span></ng-template>
+                  </ng-container>
+                  <span *ngIf="ab.idUtilisateur == null" class="text-danger">Utilisateur inconnu</span>
+                </td>
+
+                <!-- Prédiction IA -->
+                <td>
+                  <ng-container *ngIf="ab.idUtilisateur != null">
+                    <span *ngIf="renewalPredictions[ab.idUtilisateur]; else loadingRenewal">
+                      {{ renewalPredictions[ab.idUtilisateur] }}
+                    </span>
+                    <ng-template #loadingRenewal><span class="text-muted">Chargement...</span></ng-template>
+                  </ng-container>
+                  <span *ngIf="ab.idUtilisateur == null" class="text-danger">Utilisateur inconnu</span>
+                </td>
+
+                <!-- Actions -->
+                <td>
+                  <button *ngIf="!showArchived" class="btn btn-sm btn-danger" (click)="archiver(ab.idAbonnement)">
+                    <i class="fas fa-archive"></i> Archiver
+                  </button>
+                  <button *ngIf="showArchived" class="btn btn-sm btn-success" (click)="restaurer(ab.idAbonnement)">
+                    <i class="fas fa-undo"></i> Restaurer
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="card-footer py-4 d-flex justify-content-between align-items-center">
+          <button class="btn btn-outline-info" (click)="toggleArchivedView()">
+            {{ showArchived ? 'Voir actifs' : 'Voir archivés' }}
+          </button>
+
+          <nav aria-label="Pagination">
+            <ul class="pagination mb-0">
+              <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item">
+                <button class="page-link" (click)="changePage(i)">
+                  {{ i + 1 }}
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

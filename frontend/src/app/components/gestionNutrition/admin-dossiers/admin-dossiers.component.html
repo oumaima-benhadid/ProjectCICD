@@ -1,0 +1,147 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-primary">
+    <i class="fas fa-folder-open me-2"></i>Gestion des Dossiers Médicaux
+  </h2>
+
+  <!-- Barre de recherche et onglets -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="form-control" placeholder="Rechercher..." 
+                   [(ngModel)]="searchTerm">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <button class="nav-link" [class.active]="activeTab === 'actifs'" 
+                      (click)="switchTab('actifs')">
+                <i class="fas fa-file-alt me-1"></i>
+                Actifs ({{dossiersActifs.length}})
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" [class.active]="activeTab === 'archives'" 
+                      (click)="switchTab('archives')">
+                <i class="fas fa-archive me-1"></i>
+                Archivés ({{dossiersArchives.length}})
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicateur de chargement -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p class="mt-3">Chargement des dossiers...</p>
+  </div>
+
+  <!-- Liste des dossiers actifs -->
+  <div *ngIf="!loading && activeTab === 'actifs'">
+    <div *ngIf="filteredActifs.length === 0" class="alert alert-info">
+      Aucun dossier actif trouvé
+    </div>
+
+    <div *ngIf="filteredActifs.length > 0" class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Maladies</th>
+            <th>Objectif</th>
+            <th>Traitements</th>
+            <th>Poids/Taille</th>
+            <th>Groupe Sanguin</th>
+            <th>Allergies</th>
+            <th>IMC</th>
+            <th>RDV</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dossier of filteredActifs">
+            <td>{{ dossier.maladies }}</td>
+            <td>{{ dossier.objectifSante }}</td>
+            <td>{{ dossier.traitements }}</td>
+            <td>
+              {{ dossier.poids }} kg / {{ dossier.tailles }} cm
+            </td>
+            <td>{{ dossier.groupeSanguin || 'N/A' }}</td>
+            <td>{{ dossier.allergies || 'Aucune' }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-danger': dossier.imc && dossier.imc >= 30,
+                'bg-warning': dossier.imc && dossier.imc >= 25 && dossier.imc < 30,
+                'bg-success': dossier.imc && dossier.imc < 25
+              }">
+                {{ dossier.imc?.toFixed(1) || 'N/A' }}
+              </span>
+            </td>
+            <td>
+              <i class="fas" [ngClass]="{
+                'fa-check-circle text-success': dossier.rdvRecommande,
+                'fa-times-circle text-secondary': !dossier.rdvRecommande
+              }"></i>
+            </td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-danger" (click)="archiveDossier(dossier.idDossier)">
+                <i class="fas fa-archive me-1"></i>Archiver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Liste des dossiers archivés -->
+  <div *ngIf="!loading && activeTab === 'archives'">
+    <div *ngIf="filteredArchives.length === 0" class="alert alert-info">
+      Aucun dossier archivé trouvé
+    </div>
+
+    <div *ngIf="filteredArchives.length > 0" class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Maladies</th>
+            <th>Objectif</th>
+            <th>Traitements</th>
+            <th>Poids/Taille</th>
+            <th>Groupe Sanguin</th>
+            <th>Allergies</th>
+            <th>Date archivage</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dossier of filteredArchives" class="table-secondary">
+            <td>{{ dossier.maladies }}</td>
+            <td>{{ dossier.objectifSante }}</td>
+            <td>{{ dossier.traitements }}</td>
+            <td>
+              {{ dossier.poids }} kg / {{ dossier.tailles }} cm
+            </td>
+            <td>{{ dossier.groupeSanguin || 'N/A' }}</td>
+            <td>{{ dossier.allergies || 'Aucune' }}</td>
+            <td>{{ dossier.dateArchivage | date:'dd/MM/yyyy' }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-success" (click)="restoreDossier(dossier.idDossier)">
+                <i class="fas fa-undo me-1"></i>Restaurer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

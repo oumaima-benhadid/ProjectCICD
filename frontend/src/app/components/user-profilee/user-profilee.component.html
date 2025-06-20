@@ -1,0 +1,55 @@
+<div class="container mt-5">
+    <h3 class="text-center mb-4">👤 Mon Profil</h3>
+  
+    <form (ngSubmit)="saveChanges()" class="w-50 mx-auto">
+      <div class="text-center mb-3">
+        <img [src]="photoPreview" alt="Photo de profil" width="100" height="100" class="rounded-circle">
+        <input type="file" (change)="onPhotoSelected($event)" class="form-control mt-2">
+      </div>
+  
+      <div class="form-group mb-3">
+        <label>Nom</label>
+        <input class="form-control" [(ngModel)]="user.nom" name="nom">
+      </div>
+  
+      <div class="form-group mb-3">
+        <label>Prénom</label>
+        <input class="form-control" [(ngModel)]="user.prenom" name="prenom">
+      </div>
+  
+      <div class="form-group mb-3">
+        <label>Email</label>
+        <input class="form-control" [(ngModel)]="user.email" name="email" readonly>
+      </div>
+  
+      <div class="form-group mb-3">
+        <label>Téléphone</label>
+        <input class="form-control" [(ngModel)]="user.numeroDeTelephone" name="numeroDeTelephone">
+      </div>
+  
+      <div class="form-group mb-3">
+        <label>Date de naissance</label>
+        <input class="form-control" [(ngModel)]="user.dateNaissance" name="dateNaissance" type="date">
+      </div>
+  
+      
+      <div class="form-group mb-3">
+        <label>Sexe</label>
+        <select class="form-control" [(ngModel)]="user.sexe" name="sexe">
+          <option value="Homme">Homme</option>
+          <option value="Femme">Femme</option>
+        </select>
+      </div>
+  
+      <button class="btn btn-primary w-100">💾 Enregistrer</button>
+      <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">
+        {{ successMsg }}
+      </div>
+      
+      <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">
+        {{ errorMsg }}
+      </div>
+      
+    </form>
+  </div>
+  

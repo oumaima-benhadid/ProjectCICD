@@ -1,0 +1,132 @@
+<div class="card shadow border-0 rounded-4">
+  <div class="card-header bg-primary text-white rounded-top-4">
+    <h4 class="mb-0">
+      <i class="fas fa-plus me-2"></i> {{ title }}
+    </h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="service.formData" (ngSubmit)="onSubmit()" novalidate>
+      <div class="row g-3">
+
+        <!-- Titre -->
+        <div class="col-md-6">
+          <label class="form-label">Titre :</label>
+          <input type="text" formControlName="titre" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['titre']?.errors }" />
+          <div *ngIf="submitted && f['titre']?.errors" class="invalid-feedback">
+            <div *ngIf="f['titre']?.errors?.['required']">Titre requis</div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="col-md-6">
+          <label class="form-label">Description :</label>
+          <textarea formControlName="description" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['description']?.errors }"></textarea>
+          <div *ngIf="submitted && f['description']?.errors" class="invalid-feedback">
+            <div *ngIf="f['description']?.errors?.['required']">Description requise</div>
+            <div *ngIf="f['description']?.errors?.['minlength']">Minimum 10 caractères</div>
+          </div>
+        </div>
+
+      <!-- Lieu -->
+<div class="col-md-6 position-relative">
+  <label class="form-label">Lieu :</label>
+  <input type="text" formControlName="lieu" class="form-control"
+    [ngClass]="{ 'is-invalid': submitted && f['lieu']?.errors }" autocomplete="off" />
+  
+  <!-- Liste déroulante des suggestions -->
+  <ul class="list-group position-absolute shadow w-100 zindex-dropdown" style="z-index: 1000;" *ngIf="suggestions.length > 0">
+    <li *ngFor="let suggestion of suggestions"
+        class="list-group-item list-group-item-action"
+        (click)="selectSuggestion(suggestion)">
+      {{ suggestion }}
+    </li>
+  </ul>
+
+  <div *ngIf="submitted && f['lieu']?.errors" class="invalid-feedback d-block">
+    <div *ngIf="f['lieu']?.errors?.['required']">Lieu requis</div>
+  </div>
+</div>
+
+
+        <!-- Date -->
+        <div class="col-md-6">
+          <label class="form-label">Date de l'événement :</label>
+          <input type="datetime-local" formControlName="dateEvenement" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['dateEvenement']?.errors }" />
+            <div *ngIf="submitted && f['dateEvenement']?.errors" class="invalid-feedback">
+              <div *ngIf="f['dateEvenement']?.errors?.['required']">Date requise</div>
+              <div *ngIf="f['dateEvenement']?.errors?.['pastDate']">La date ne peut pas être dans le passé</div>
+            </div>
+            
+        </div>
+        <!-- Date Fin -->
+<div class="col-md-6">
+  <label class="form-label">Date de fin :</label>
+  <input type="datetime-local" formControlName="dateFin" class="form-control"
+    [ngClass]="{ 'is-invalid': submitted && f['dateFin']?.errors }" />
+    <div *ngIf="submitted && f['dateFin']?.errors" class="invalid-feedback">
+      <div *ngIf="f['dateFin']?.errors?.['required']">Date de fin requise</div>
+      <div *ngIf="f['dateFin']?.errors?.['endBeforeStart']">La date de fin doit être après la date de début</div>
+    </div>
+</div>    
+
+         
+        <!-- Capacité -->
+        <div class="col-md-6">
+          <label class="form-label">Capacité maximale :</label>
+          <input type="number" formControlName="capaciteMax" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['capaciteMax']?.errors }" />
+          <div *ngIf="submitted && f['capaciteMax']?.errors" class="invalid-feedback">
+            <div *ngIf="f['capaciteMax']?.errors?.['required']">Capacité requise</div>
+            <div *ngIf="f['capaciteMax']?.errors?.['min']">La capacité doit être au moins 1</div>
+          </div>
+        </div>
+
+        <!-- Type -->
+        <!-- Type -->
+<div class="col-md-6">
+  <label class="form-label">Type d'événement :</label>
+  <select formControlName="typeEvenement" class="form-select"
+    [ngClass]="{ 'is-invalid': submitted && f['typeEvenement']?.errors }">
+    <option value="">-- Sélectionner --</option>
+    <option value="SPORTIF">Sportif</option>
+    <option value="CONFERENCE">Conférence</option>
+    <option value="ATELIER">Atelier</option>
+    <option value="SOIREE">Soirée</option>
+    <option value="EXPOSITION">Exposition</option>
+    <option value="COMPETITION">Compétition</option>
+    <option value="FORUM">Forum</option>
+    <option value="VOLONTARIAT">Volontariat</option>
+    <option value="FORMATION">Formation</option>
+    <option value="CULTUREL">Culturel</option>
+  </select>
+  <div *ngIf="submitted && f['typeEvenement']?.errors" class="invalid-feedback">
+    <div *ngIf="f['typeEvenement']?.errors?.['required']">Type requis</div>
+  </div>
+</div>
+
+        <!-- Image -->
+        <div class="col-md-6">
+          <label class="form-label">Image :</label>
+          <input type="file" accept="image/*" (change)="onSelectFile($event)" class="form-control" />
+          <div class="mt-2">
+            <img *ngIf="imgURL && eventFile" [src]="imgURL" height="150" class="rounded shadow-sm me-2" />
+            <img *ngIf="!eventFile && imgURL && service.choixmenu === 'M'" [src]="imgURL" height="150" class="rounded shadow-sm" />
+          </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+          <button type="submit" class="btn btn-success">
+            <i class="fa fa-database me-1"></i> Valider
+          </button>
+          <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+            <i class="fa fa-times me-1"></i> Fermer
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

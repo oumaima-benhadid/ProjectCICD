@@ -1,0 +1,80 @@
+<section class="register-page">
+  <div class="register-card">
+
+    <h2 class="text-center mb-3">Inscription sur <span class="text-danger">FitMind</span></h2>
+    <p class="text-center text-muted mb-4">Rejoignez notre communauté de bien-être 🌿</p>
+
+    <form (ngSubmit)="register()" #form="ngForm">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label>Nom</label>
+          <input type="text" name="nom" [(ngModel)]="user.nom" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label>Prénom</label>
+          <input type="text" name="prenom" [(ngModel)]="user.prenom" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label>Email</label>
+          <input type="email" name="email" [(ngModel)]="user.email" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label>Mot de passe</label>
+          <input type="password" name="password" [(ngModel)]="user.password" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label>Date de naissance</label>
+          <input type="date" name="dateNaissance" [(ngModel)]="user.dateNaissance" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label>Sexe</label>
+          <select name="sexe" [(ngModel)]="user.sexe" class="form-control" required>
+            <option value="" disabled selected>Choisir</option>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label>Téléphone</label>
+          <input type="number" name="numeroDeTelephone" [(ngModel)]="user.numeroDeTelephone" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label>Photo de profil</label>
+          <input type="file" name="photoProfil" (change)="onFileSelected($event)" class="form-control">
+        </div>
+        <div class="col-md-12">
+          <label>Je suis :</label>
+          <select name="role" [(ngModel)]="user.role" class="form-control" required>
+            <option value="" disabled selected>Choisir un rôle</option>
+            <option [ngValue]="'Etudiant'">Étudiant</option>
+            <option [ngValue]="'Coach'">Coach</option>
+            <option [ngValue]="'Admin'">Admin</option>
+
+            <option [ngValue]="'Nutritionniste'">Nutritionniste</option>
+            <option [ngValue]="'Responsable_menu'">Responsable Menu</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 mt-4" [disabled]="loading">
+        <span *ngIf="!loading">S'inscrire</span>
+        <span *ngIf="loading"><span class="spinner-border spinner-border-sm me-2"></span>Traitement en cours...</span>
+      </button>
+
+      <div *ngIf="loading && captchaReady" class="alert alert-info mt-3">
+        ✅ Captcha validé !
+      </div>
+      
+      <div *ngIf="!captchaReady && errorMsg" class="alert alert-danger mt-3">
+        ❌ Captcha non validé !
+      </div>
+            <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+      <div *ngIf="successMsg" class="alert alert-success">{{ successMsg }}</div>
+
+      <div class="text-center mt-4">
+        <span>Déjà un compte ?</span>
+        <a [routerLink]="['/login']">Se connecter</a>
+      </div>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,138 @@
+<app-navbar></app-navbar>
+<div class="container mt-4 text-center mb-4">
+  <h2 class="mb-4 ">Liste des Activités Sportives</h2>
+
+  <!-- Bouton Ajouter -->
+  <button class="btn btn-success mb-3" (click)="openAddForm()">+ Ajouter une activité</button>
+  <div class="mb-3">
+    <input
+    type="text"
+    class="form-control mb-3"
+      placeholder="Rechercher une activité..."
+      [(ngModel)]="searchTerm"
+    />
+  </div>
+  <!-- Tableau -->
+  <table class="table table-bordered table-striped" *ngIf="activites.length > 0">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let activite of activites | filter: searchTerm">
+          <td>{{ activite.nomActivite }}</td>
+        <td>{{ activite.description }}</td>
+        <td><img [src]="activite.imageUrl" alt="image" width="80" /></td>
+        <td>{{ activite.statutActivite }}</td>
+        <td>
+         <!-- Bouton Modifier -->
+<button class="btn btn-warning btn-icon" (click)="openEditForm(activite)">
+  ✏️
+</button>
+
+<!-- Bouton Supprimer -->
+<button class="btn btn-danger btn-icon" (click)="deleteActivite(activite.id)">
+  🗑️
+</button>
+
+<!-- Bouton Voir Séances -->
+<button class="btn btn-primary btn-icon" [routerLink]="['/admin-coach/seanceback', activite.id]" (click)="logActiviteId(activite.id)">
+  🎯 Voir séances
+</button>
+
+                     <!-- Bouton Redirection -->
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Formulaire d'ajout / modification -->
+  <div *ngIf="showForm" class="card p-4 mt-4">
+    <h5 class="mb-3">{{ isEditMode ? 'Modifier' : 'Ajouter' }} une activité</h5>
+
+    <form #activiteForm="ngForm" (ngSubmit)="submitForm()">
+      <!-- Nom -->
+      <div class="mb-3">
+        <label for="nom">Nom</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nom"
+          [(ngModel)]="newActivite.nomActivite"
+          name="nom"
+          required
+          minlength="3"
+          maxlength="50"
+          #nom="ngModel"
+        />
+        <div *ngIf="nom.invalid && nom.touched" class="text-danger">
+          <small *ngIf="nom.errors?.['required']">Le nom est requis.</small>
+          <small *ngIf="nom.errors?.['minlength']">Le nom doit contenir au moins 3 caractères.</small>
+          <small *ngIf="nom.errors?.['maxlength']">Le nom ne peut pas dépasser 50 caractères.</small>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="description">Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          [(ngModel)]="newActivite.description"
+          name="description"
+          required
+          minlength="10"
+          maxlength="200"
+          #description="ngModel"
+        ></textarea>
+        <div *ngIf="description.invalid && description.touched" class="text-danger">
+          <small *ngIf="description.errors?.['required']">La description est requise.</small>
+          <small *ngIf="description.errors?.['minlength']">La description doit contenir au moins 10 caractères.</small>
+          <small *ngIf="description.errors?.['maxlength']">La description ne peut pas dépasser 200 caractères.</small>
+        </div>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="mb-3">
+        <label for="image">Choisir une image</label>
+        <input
+          type="file"
+          class="form-control"
+          id="image"
+          (change)="onFileChange($event)"
+        />
+      </div>
+
+      <!-- Statut -->
+      <div class="mb-3">
+        <label for="statut">Statut</label>
+        <select
+          class="form-control"
+          id="statut"
+          [(ngModel)]="newActivite.statutActivite"
+          name="statut"
+          required
+          #statut="ngModel"
+        >
+          <option value="ACTIVE">ACTIVE</option>
+          <option value="INACTIVE">INACTIVE</option>
+        </select>
+        <div *ngIf="statut.invalid && statut.touched" class="text-danger">
+          <small>Le statut est requis.</small>
+        </div>
+      </div>
+
+      <!-- Boutons -->
+      <button type="submit" class="btn btn-primary" [disabled]="activiteForm.invalid">
+        {{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="cancelForm()">Annuler</button>
+    </form>
+  </div>
+</div>

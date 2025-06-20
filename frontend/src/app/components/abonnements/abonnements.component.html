@@ -1,0 +1,82 @@
+<div class="container my-5">
+  <h2 class="text-primary mb-4 fw-bold">📝 Ajouter un abonnement</h2>
+
+  <form (ngSubmit)="ajouterAbonnement()" #abonnementForm="ngForm" novalidate>
+<!-- Type d’abonnement -->
+    <div class="mb-3">
+      <label for="type" class="form-label">Type d’abonnement</label>
+      <select
+        id="type"
+        [(ngModel)]="typeAbonnement"
+        (ngModelChange)="calculateMontant()"
+        name="typeAbonnement"
+        class="form-select"
+        required
+        #typeModel="ngModel"
+      >
+        <option *ngFor="let type of typeOptions" [value]="type">{{ type }}</option>
+      </select>
+      <div class="text-danger" *ngIf="typeModel.invalid && abonnementForm.submitted">
+        Le type est obligatoire.
+      </div>
+    </div>
+
+    <!-- Durée -->
+    <div class="mb-3">
+      <label for="duree" class="form-label">Durée</label>
+      <select
+        id="duree"
+        [(ngModel)]="dureeAbonnement"
+        (ngModelChange)="calculateMontant()"
+        name="dureeAbonnement"
+        class="form-select"
+        required
+        #dureeModel="ngModel"
+      >
+        <option *ngFor="let duree of dureeOptions" [value]="duree">{{ duree }}</option>
+      </select>
+      <div class="text-danger" *ngIf="dureeModel.invalid && abonnementForm.submitted">
+        La durée est obligatoire.
+      </div>
+    </div>
+
+    <!-- Montant (automatique) -->
+    <div class="mb-3">
+      <label for="montant" class="form-label">Montant (calculé automatiquement)</label>
+      <input
+        type="number"
+        id="montant"
+        [(ngModel)]="montant"
+        name="montant"
+        class="form-control"
+        readonly
+      >
+    </div>
+      
+
+    <!-- Mode de paiement -->
+    <div class="mb-3">
+      <label for="modePaiement" class="form-label">Mode de paiement</label>
+      <input
+        type="text"
+        id="modePaiement"
+        [(ngModel)]="modePaiement"
+        name="modePaiement"
+        class="form-control"
+        required
+        #modeModel="ngModel"
+      >
+      <div class="text-danger" *ngIf="modeModel.invalid && abonnementForm.submitted">
+        Le mode de paiement est obligatoire.
+      </div>
+    </div>
+
+    <!-- Stripe Card -->
+    <div class="mb-3">
+      <label for="card-element" class="form-label">💳 Carte bancaire</label>
+      <div id="card-element" class="form-control p-3"></div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+  </form>
+</div>

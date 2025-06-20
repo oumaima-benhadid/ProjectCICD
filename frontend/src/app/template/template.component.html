@@ -1,0 +1,123 @@
+<app-navbarfront></app-navbarfront>
+
+<main class="main">
+
+  <!-- Hero Section (Slideshow amélioré) -->
+  <section *ngIf="isHomePage()" id="hero" class="hero-swiper init-swiper">
+    <div class="swiper-wrapper">
+
+      <div class="swiper-slide slide-fullscreen" *ngFor="let img of ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg']" data-aos="fade-up">
+        <img [src]="'assets/front/img/' + img" alt="Motivational Image" />
+
+        <div class="slide-overlay text-center" data-aos="fade-up">
+          <h1 class="text-white">Éveillez votre force intérieure</h1>
+          <p class="text-light">Fitness, Nutrition, Mental - Ensemble pour votre bien-être 💪🧠❤️</p>
+          <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="btn btn-outline-light glightbox">
+              <i class="bi bi-play-circle"></i> Vidéo
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="swiper-pagination"></div>
+  </section>
+
+  <!-- Section Citations Inspirantes -->
+  <section *ngIf="isHomePage()" class="py-5 bg-light text-center">
+    <div class="container">
+      <h2 class="text-primary mb-5" data-aos="fade-up">Inspirez votre quotidien</h2>
+      <div class="row g-4">
+        <div class="col-md-3" *ngFor="let quote of [
+          { img: 'SPORT1.webp', text: '💪 Le sport est la santé !' },
+          { img: 'qua1.jpg', text: '👑 L’exercice est roi, nutrition est reine.' },
+          { img: 'bien.jpg', text: '🧠 Bien dans sa tête, bien dans son corps.' },
+          { img: 'neutr.jpg', text: '❤️ Santé : un trésor précieux.' }
+        ]" data-aos="zoom-in">
+          <div class="card shadow h-100">
+            <img [src]="'assets/front/img/' + quote.img" class="card-img-top" alt="Inspiration">
+            <div class="card-body">
+              <p class="card-text">{{ quote.text }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Bienfaits Sport / Nutrition -->
+  <section *ngIf="isHomePage()" class="py-5 section-bg text-center">
+    <div class="container">
+      <h2 class="text-primary mb-5" data-aos="fade-up">Les Bienfaits de l'Équilibre</h2>
+      <div class="row g-5">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <img src="assets/front/img/conseil.jpg" class="img-fluid rounded shadow" alt="Alimentation saine">
+          <p class="mt-3">🍎 Une alimentation saine booste énergie et concentration.</p>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <img src="assets/front/img/sport-aliment.jpg" class="img-fluid rounded shadow" alt="Sport Santé">
+          <p class="mt-3">🏃‍♂️ Le sport améliore santé mentale et physique.</p>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+          <img src="assets/front/img/sport-food.jpg" class="img-fluid rounded shadow" alt="Sport & Nutrition">
+          <p class="mt-3">💥 Sport & nutrition : votre combo gagnant bien-être.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Abonnements Angular Router -->
+  <section id="abonnements" class="abonnements section-bg">
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer id="footer" class="footer bg-white text-center text-lg-start">
+  <div class="container p-4">
+
+    <div class="row">
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h5 class="text-uppercase mb-4">FitMind</h5>
+        
+        <p>Reconnectez votre corps et votre esprit avec nos conseils bien-être.</p>
+      </div>
+
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h5 class="text-uppercase mb-4">Liens Utiles</h5>
+        <ul class="list-unstyled">
+          <li><a href="#hero" class="text-dark">Accueil</a></li>
+          <li><a routerLink="/about" class="nav-link">À propos</a></li>
+          <li><a href="#contact" class="text-dark">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4">
+        <h5 class="text-uppercase mb-4">Nos Services</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-dark">Fitness</a></li>
+          <li><a href="#" class="text-dark">Nutrition</a></li>
+          <li><a href="#" class="text-dark">Coaching Mental</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+        <h5 class="text-uppercase mb-4">Suivez-nous</h5>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="#" class="text-dark"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-dark"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-dark"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-center p-3" style="background-color: #f1f1f1;">
+    © 2025 <strong class="text-primary">FitMind</strong>. Tous droits réservés.
+  </div>
+</footer>

@@ -1,0 +1,63 @@
+<!-- 🎥 Vidéo de fond -->
+<div class="video-bg-container">
+  <video autoplay muted loop playsinline class="video-bg">
+    <source src="assets/FitMind.mp4" type="video/mp4" />
+    Votre navigateur ne supporte pas la vidéo HTML5.
+  </video>
+</div>
+
+<!-- 📋 Contenu centré -->
+<div class="dashboard-content d-flex justify-content-center">
+  <div class="reclamation-container">
+
+    <h2 class="my-4 text-center text-primary fw-bold">📋 Liste des réclamations</h2>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>Nom Étudiant</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Statut</th>
+            <th>Action</th>
+            <th>Archivage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of reclamations" class="text-center">
+            <td>{{ r.nomUtilisateur }}</td>
+            <td>{{ r.typeReclamation }}</td>
+            <td>{{ r.description }}</td>
+            <td>
+              <span class="badge"
+                [ngClass]="{
+                  'bg-success': r.statut === 'Résolue',
+                  'bg-danger': r.statut === 'Non_Résolue',
+                  'bg-warning text-dark': r.statut === 'En_Cours'
+                }">
+                {{ r.statut }}
+              </span>
+            </td>
+            <td>
+              <select class="form-select" [(ngModel)]="r.statut" (change)="updateStatut(r.id, r.statut)">
+                <option *ngFor="let s of statutOptions" [value]="s">{{ s }}</option>
+              </select>
+            </td>
+            <td>
+              <button *ngIf="!r.archived" class="btn btn-sm btn-outline-danger"
+                      (click)="archiveReclamation(r)">
+                🗃️ Archiver
+              </button>
+              <button *ngIf="r.archived" class="btn btn-sm btn-outline-success"
+                      (click)="restoreReclamation(r)">
+                ♻️ Restaurer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

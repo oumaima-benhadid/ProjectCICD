@@ -1,0 +1,139 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-primary">
+    <i class="fas fa-calendar-alt me-2"></i>Gestion des Rendez-vous
+  </h2>
+
+  <!-- Barre de recherche et onglets -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="form-control" placeholder="Rechercher..." 
+                   [(ngModel)]="searchTerm">
+          </div>
+        </div>
+        <div class="col-md-3 mb-3 mb-md-0">
+          <select class="form-select" [(ngModel)]="selectedStatut">
+            <option *ngFor="let option of statutOptions" [value]="option.value">
+              {{option.label}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-5">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <button class="nav-link" [class.active]="activeTab === 'actifs'" 
+                      (click)="switchTab('actifs')">
+                <i class="fas fa-calendar-check me-1"></i>
+                Actifs ({{rendezVousActifs.length}})
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" [class.active]="activeTab === 'archives'" 
+                      (click)="switchTab('archives')">
+                <i class="fas fa-archive me-1"></i>
+                Archivés ({{rendezVousArchives.length}})
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicateur de chargement -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p class="mt-3">Chargement des rendez-vous...</p>
+  </div>
+
+  <!-- Liste des rendez-vous actifs -->
+  <div *ngIf="!loading && activeTab === 'actifs'">
+    <div *ngIf="filteredActifs.length === 0" class="alert alert-info">
+      Aucun rendez-vous actif trouvé
+    </div>
+
+    <div *ngIf="filteredActifs.length > 0" class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Date/Heure</th>
+            <th>Durée (min)</th>
+            <th>Remarque</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rdv of filteredActifs">
+            <td>{{ formatDate(rdv.dateHeure) }}</td>
+            <td>{{ rdv.duree }}</td>
+            <td>{{ rdv.remarque }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-success': rdv.statut === statutRendezVousEnum.ACCEPTE,
+                'bg-warning': rdv.statut === statutRendezVousEnum.EN_COURS,
+                'bg-danger': rdv.statut === statutRendezVousEnum.REFUSE
+              }">
+                {{ getStatutLabel(rdv.statut) }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-danger" (click)="archiveRendezVous(rdv.idRendezVous)">
+                <i class="fas fa-archive me-1"></i>Archiver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Liste des rendez-vous archivés -->
+  <div *ngIf="!loading && activeTab === 'archives'">
+    <div *ngIf="filteredArchives.length === 0" class="alert alert-info">
+      Aucun rendez-vous archivé trouvé
+    </div>
+
+    <div *ngIf="filteredArchives.length > 0" class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Date/Heure</th>
+            <th>Durée (min)</th>
+            <th>Remarque</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rdv of filteredArchives">
+            <td>{{ formatDate(rdv.dateHeure) }}</td>
+            <td>{{ rdv.duree }}</td>
+            <td>{{ rdv.remarque }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-success': rdv.statut === statutRendezVousEnum.ACCEPTE,
+                'bg-warning': rdv.statut === statutRendezVousEnum.EN_COURS,
+                'bg-danger': rdv.statut === statutRendezVousEnum.REFUSE
+              }">
+                {{ getStatutLabel(rdv.statut) }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-success" (click)="restoreRendezVous(rdv.idRendezVous)">
+                <i class="fas fa-undo me-1"></i>Restaurer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
